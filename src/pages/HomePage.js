@@ -7,9 +7,6 @@ const handleSubmit = async (navigate, apiKey, secretKey, playerDetails) => {
     console.log("Submitting");
     const res = await getRedemptionRules(apiKey, secretKey);
     // Should navigate to RulesPage with res passed
-    // this.props.history.push("/rulesPage", res);
-    console.log(res);
-    console.log(playerDetails);
     navigate("/rulesPage", {
       state: {
         redemptionRules: res.redemptionRules,
@@ -20,6 +17,7 @@ const handleSubmit = async (navigate, apiKey, secretKey, playerDetails) => {
     console.log(e);
   }
 };
+
 function HomePage() {
   const [apiKey, setApikey] = useState("");
   const [secretKey, setSecretKey] = useState("");
@@ -100,6 +98,17 @@ function HomePage() {
           }}
         />
       </form>
+      <br/>
+      <hr/>
+      <br/>
+      <input
+          type="button"
+          value="Test Install Flow"
+          onClick={async (e) => {
+            e.preventDefault();
+            window.location.href = "https://app.stg.gameball.co/foodics_auth";
+          }}
+        />
     </div>
   );
 }
