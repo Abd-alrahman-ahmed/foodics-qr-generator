@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 function RenderRule(rule, playerDetails) {
   const qrPayload = JSON.stringify({
     ...playerDetails,
-    reward_code: `gameball_${rule.id}_${rule.pointsToRedeem}`,
+    reward_code: `gameball_${rule.id}_${rule.pointsToRedeem ?? 0}`,
   });
   console.log(qrPayload);
   return (
