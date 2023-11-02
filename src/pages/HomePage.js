@@ -1,15 +1,24 @@
 import { Component, useEffect, useState } from "react";
-import { getRedemptionRules } from "../services/gameballService";
+import { createPlayer, getRedemptionRules } from "../services/gameballService";
 import { useNavigate } from "react-router-dom";
 
 const handleSubmit = async (navigate, apiKey, secretKey, playerDetails) => {
   try {
-    console.log("Submitting");
+    const apiPlayerDetails = await createPlayer(apiKey, {
+      playerUniqueId: playerDetails.mobile_country_code + "" + playerDetails.customer_mobile_number,
+      playerAttributes: {
+        displayName: playerDetails.customer_name,
+        mobile: playerDetails.mobile_country_code + "" + playerDetails.customer_mobile_number
+      }
+    });
+    let playerBalance = apiPlayerDetails.balance.pointsBalance - apiPlayerDetails.balance.pendingPoints;
     const res = await getRedemptionRules(apiKey, secretKey);
+    const allowed_types = ["percentage_discount_settings", "free_shipping_settings", "free_product_settings", "fixed_rate_settings"];
+    const redemptionRules = res.redemptionRules.filter(r => r.pointsToRedeem <= playerBalance && allowed_types.includes(r.ruleType));
     // Should navigate to RulesPage with res passed
     navigate("/rulesPage", {
       state: {
-        redemptionRules: res.redemptionRules,
+        redemptionRules: redemptionRules,
         playerDetails
       }
     });

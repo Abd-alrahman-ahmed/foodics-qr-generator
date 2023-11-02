@@ -24,13 +24,19 @@ function RulesPage() {
   const playerDetails = location.state.playerDetails;
   console.log(location);
 
-  return (
-    <div>
-      {rules.map((rule) => {
-        return RenderRule(rule, playerDetails);
-      })}
-    </div>
-  );
+  if (rules && rules.length) {
+    return (
+      <div>
+        {rules.map((rule) => {
+          return RenderRule(rule, playerDetails);
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <h1>Your current balance is insufficient for redemption</h1>
+    );
+  }
 }
 
 export default RulesPage;

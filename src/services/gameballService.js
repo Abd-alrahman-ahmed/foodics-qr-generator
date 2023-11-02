@@ -14,4 +14,17 @@ const getRedemptionRules = async (apiKey, secretKey) => {
   }
 };
 
-export{ getRedemptionRules };
+const createPlayer = async (apiKey, player) => {
+  try {
+    const config = { headers: { apiKey: apiKey } };
+    const res = await axios.post(
+      "https://api.stg.gameball.co/api/v3/integrations/player", player, config
+    );
+
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export{ getRedemptionRules, createPlayer };
