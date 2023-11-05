@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 const handleSubmit = async (navigate, apiKey, secretKey, playerDetails) => {
   try {
+    const playerMobile = playerDetails.mobile_country_code + "" + playerDetails.customer_mobile_number;
     const apiPlayerDetails = await createPlayer(apiKey, {
-      playerUniqueId: playerDetails.mobile_country_code + "" + playerDetails.customer_mobile_number,
+      playerUniqueId: playerMobile,
       playerAttributes: {
         displayName: playerDetails.customer_name,
-        mobile: playerDetails.mobile_country_code + "" + playerDetails.customer_mobile_number
-      }
+        mobile: playerMobile
+      },
+      mobile: playerMobile
     });
     let playerBalance = apiPlayerDetails.balance.pointsBalance - apiPlayerDetails.balance.pendingPoints;
     const res = await getRedemptionRules(apiKey, secretKey);
