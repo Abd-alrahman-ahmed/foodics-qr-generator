@@ -117,7 +117,7 @@ function HomePage() {
           value="Test Install Flow"
           onClick={async (e) => {
             e.preventDefault();
-            window.location.href = "https://app.stg.gameball.co/foodics_auth";
+            window.location.href = "https://app.gameball.co/foodics_auth";
           }}
         />
     </div>
